@@ -173,9 +173,6 @@ include_once "php/config.php"; // Include other necessary files
             text-decoration: solid;
             color: #000000;
         }
-        #logout{
-            background-color: #201eae6c;
-        }
     </style>
 </head>
 
@@ -205,8 +202,8 @@ include_once "php/config.php"; // Include other necessary files
                     <div class="bx bx-menu" id="menu-icon"></div>
                     <ul class="nav_items">
                         <li><a href="Home.php" class="logout">Home</a></li>
-                        <li><a href="passenger.php" class="logout">Passenger</a></li>
-                        <li><a href="driver.php" class="logout">Driver</a></li>
+                        <!-- <li><a href="passenger.php" class="logout">Passenger</a></li>
+                        <li><a href="driver.php" class="logout">Driver</a></li> -->
                         <li><a href="users.php" class="logout">Chat</a></li>
                         <li><a href="php/logout.php?logout_id=<?php echo $row['unique_id']; ?>"
                                 class="logout" id="logout">Logout</a></li>

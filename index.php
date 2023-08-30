@@ -22,6 +22,7 @@ if (isset($_SESSION['unique_id'])) {
             height: 100vh;
         }
 
+
         .hero {
             display: flex;
             justify-content: center;
@@ -31,7 +32,9 @@ if (isset($_SESSION['unique_id'])) {
         }
 
         .sidebar-container {
-            background-color: rgba(113, 112, 112, 0.21);
+            /* background-image: linear-gradient(to bottom right, #7DCCC5, #1F4E5A);
+            opacity: 0.9; */
+            background-image: linear-gradient(to bottom right, rgba(125, 204, 197, 0.9), #1F4E5A); /* Adjusted second color to a darker shade */
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
@@ -230,8 +233,7 @@ if (isset($_SESSION['unique_id'])) {
                 width: 100%;
             }
 
-            .name-details {
-            }
+            .name-details {}
 
             .field.input {
                 width: 100%;
@@ -244,29 +246,33 @@ if (isset($_SESSION['unique_id'])) {
             .field.button {
                 width: 100%;
             }
+
             .hero {
-                padding: 20px; 
+                padding: 20px;
             }
 
             .sidebar-container {
-                padding: 10px; 
+                padding: 10px;
                 margin: auto;
             }
 
             .welcome-box,
             .sidebar {
                 width: 100%;
-                margin: 0; /* Remove margin */
+                margin: 0;
+                /* Remove margin */
             }
 
             .registration-form {
-                padding: 0 15px; /* Adjust padding */
+                padding: 0 15px;
+                /* Adjust padding */
             }
 
             .field.input,
             .field.image,
             .field.button {
-                margin: 10px 0; /* Add margin */
+                margin: 10px 0;
+                /* Add margin */
             }
         }
     </style>
@@ -322,7 +328,7 @@ if (isset($_SESSION['unique_id'])) {
                     <div class="link">Already signed up? <a href="login.php">Login now</a></div>
                 </section>
             </div>
-        
+
         </div>
     </section>
 

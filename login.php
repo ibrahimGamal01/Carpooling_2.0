@@ -26,14 +26,12 @@ if (isset($_SESSION['unique_id'])) {
             display: flex;
             justify-content: center;
             align-items: center;
-            /* width: 100%; */
             width: fit-content;
-            background-color: #06a600;
             height: 100%;
         }
 
         .sidebar-container {
-            background-color: rgba(113, 112, 112, 0.21);
+            background-image: linear-gradient(to bottom right, #7DCCC5, #13547A);
         }
 
         .sidebar {
@@ -245,7 +243,7 @@ if (isset($_SESSION['unique_id'])) {
         <div class="sidebar-container">
             <div class="wrapper">
                 <section class="form login">
-                    <header>Realtime Chat App</header>
+                    <header>Step into the Carpooling Community</header>
                     <form action="#" method="POST" enctype="multipart/form-data" autocomplete="off">
                         <div class="error-text"></div>
                         <div class="field input">

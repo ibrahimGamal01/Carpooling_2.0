@@ -17,7 +17,7 @@ if (!isset($_SESSION['unique_id'])) {
 <body>
   <div class="wrapper">
     <section class="users">
-      
+
       <header>
         <div class="content">
           <?php
@@ -43,7 +43,7 @@ if (!isset($_SESSION['unique_id'])) {
             <li><a href="passenger.php" class="logout">Passenger</a></li>
             <li><a href="driver.php" class="logout">Driver</a></li>
             <li><a href="users.php" class="logout">Chat</a></li>
-            <li><a href="php/logout.php?logout_id=<?php echo $row['unique_id']; ?>" class="logout">Logout</a></li>
+            <li><a href="php/logout.php?logout_id=<?php echo $row['unique_id']; ?>" class="logout" id="logout">Logout</a></li>
           </ul>
         </div>
       </header>
@@ -61,7 +61,7 @@ if (!isset($_SESSION['unique_id'])) {
 
   <script src="javascript/users.js"></script>
   <script>
-     let menu = document.querySelector('#menu-icon');
+    let menu = document.querySelector('#menu-icon');
     let navList = document.querySelector('.nav_items');
 
     menu.onclick = () => {

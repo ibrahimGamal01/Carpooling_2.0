@@ -89,16 +89,27 @@ body::-webkit-scrollbar-track {
   color: #0700e0;
 }
 
-/* ************************************* */
 
+/* ************************************* */
+#logout {
+  background-color: #185A7E;
+}
+
+#logout:hover {
+  background-color: #80D0C7;
+}
+
+#logout:active {
+  background-color: #80D0C7;
+}
 /* **************************************** */
 
 .btn {
   display: inline-block;
   padding: 12px 30px;
   color: #fff;
-  background: #007be0;
-  border-radius: 30px;
+  background: #80D0C7;
+  border-radius: 5px;
   font-size: 15px;
   border: 2px solid transparent;
   transition: all 0.5s ease;
@@ -106,11 +117,8 @@ body::-webkit-scrollbar-track {
 }
 
 .btn:hover {
-  border: 4px solid #00c9e0;
-  background: transparent;
-  color: #00c9e0;
-  font-weight: 700;
-  font-size: large;
+  color: #ffffff;
+  background: #185A7E;
   cursor: pointer;
 }
 
@@ -120,15 +128,13 @@ body::-webkit-scrollbar-track {
   cursor: pointer;
   display: none;
   position: fixed;
-  top: 20px;
-  right: 20px;
   z-index: 1001;
 }
 
 .hero {
   height: 100vh;
   width: 100%;
-  padding: 0 15%;
+  padding: 0 10%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -138,8 +144,8 @@ body::-webkit-scrollbar-track {
   position: absolute;
   top: 10px;
   right: 10px;
-  width: 70px;
-  height: 70px;
+  width: 50px;
+  height: 50px;
   z-index: 1001;
 }
 
@@ -151,7 +157,7 @@ body::-webkit-scrollbar-track {
   width: 100%;
   z-index: 1;
   margin-right: 10px;
-  border-radius: 10px;
+  border-radius: 5px;
   background-color: rgba(67, 145, 223, 0);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
   transition: max-width 0.4s;
@@ -160,7 +166,7 @@ body::-webkit-scrollbar-track {
 
 .sidebar {
   padding: 10px;
-  border-radius: 10px;
+  border-radius: 5px;
   background-color: rgba(255, 255, 255, 0);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
@@ -185,38 +191,7 @@ body::-webkit-scrollbar-track {
   padding: 7px;
   border: 1px solid #ccc;
   text-decoration: solid;
-  border-radius: 30px;
-}
-
-.main-content {
-  flex: 3;
-  background-color: #ffffff;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-  height: 100%;
-  position: relative;
-}
-
-.map-container {
-  height: calc(100vh - 100px);
-  width: 100%;
-  height: 500px;
-  position: relative;
-  overflow: hidden;
-  border-radius: 10px;
-  background-color: rgba(255, 255, 255, 0);
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-  /* padding: 10%; */
-}
-.map {
-  height: calc(100vh - 100px);
-  width: 100%;
-  height: 500px;
-  position: relative;
-  overflow: hidden;
-  border-radius: 10px;
-  background-color: rgba(255, 255, 255, 0);
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  border-radius: 5px;
 }
 
 @media only screen and (max-width: 768px) {
@@ -281,7 +256,6 @@ body::-webkit-scrollbar-track {
   #menu-icon {
     display: block;
   }
-
   .navv {
     width: 100%;
   }
@@ -298,7 +272,7 @@ body::-webkit-scrollbar-track {
     background: linear-gradient(45deg, #007be0, #00d4ff);
     text-align: left;
     transition: all 0.5s ease;
-    border-radius: 30px;
+    border-radius: 5px;
     border: 2px solid transparent;
     color: white;
   }
@@ -318,7 +292,7 @@ body::-webkit-scrollbar-track {
   }
 
   .nav-list a:hover {
-    border-radius: 30px;
+    border-radius: 5px;
     border: 2px solid transparent;
     color: white;
     background: -webkit-gradient(
@@ -338,7 +312,7 @@ body::-webkit-scrollbar-track {
 
 .ride-details {
   margin-top: 20px;
-  border-radius: 10px;
+  border-radius: 5px;
   max-width: 100%;
   width: 100%;
   height: 50%;
@@ -387,7 +361,7 @@ body::-webkit-scrollbar-track {
   z-index: 1;
   margin-right: 10px;
   padding: 5px;
-  border-radius: 10px;
+  border-radius: 5px;
   background: linear-gradient(
     135deg,
     rgba(26, 26, 29, 0.8),
