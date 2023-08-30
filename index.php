@@ -276,21 +276,6 @@ if (isset($_SESSION['unique_id'])) {
 <body>
     <section class="hero">
         <div class="sidebar-container">
-            <!-- <div class="sidebar">
-                <h1 class="registration-title">Join the Carpooling Community</h1>
-                <form action="login.html" class="registration-form">
-                    <label for="Name">Name:</label>
-                    <input type="text" id="Name" name="Name" placeholder="Name" required>
-
-                    <label for="Email">Email:</label>
-                    <input type="email" id="Email" name="Email" placeholder="Email" required>
-
-                    <label for="Password">Password:</label>
-                    <input type="password" id="Password" name="Password" placeholder="Password" required>
-
-                    <button type="submit" class="btn">Register</button>
-                </form>
-            </div> -->
             <div class="welcome-box">
                 <h2>Welcome to Carpooling UNFCCC</h2>
                 <p>Dear Carpooling Enthusiast,</p>

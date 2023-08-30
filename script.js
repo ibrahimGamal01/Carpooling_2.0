@@ -1,11 +1,3 @@
-let menu = document.querySelector('#menu-icon');
-let navList = document.querySelector('.nav-list');
-
-menu.onclick = () => {
-  menu.classList.toggle('bx-x');
-  navList.classList.toggle('open');
-}
-
 // Initialize the map
 const map = L.map('map').setView([50.704129514100735, 7.16153100070237], 16);
 

@@ -9,13 +9,14 @@
 }
 
 body {
-  /* background: #151515; */
   color: #fff;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
   background-attachment: fixed;
 }
+
+/************** Scroll bar *******************/
 
 body::-webkit-scrollbar {
   width: 1rem;
@@ -37,6 +38,8 @@ body::-webkit-scrollbar-track {
   background-color: #bb19ad00;
 }
 
+/* **************************************** */
+
 .navv {
   position: fixed;
   width: 100%;
@@ -52,11 +55,10 @@ body::-webkit-scrollbar-track {
   transition: all 0.4s ease-in-out;
 }
 
-.logo {
+/* .logo {
   display: inline-block;
   cursor: pointer;
   vertical-align: middle;
-  /* position: fixed; */
   top: 10px;
   left: 10px;
   z-index: 1001;
@@ -68,7 +70,7 @@ body::-webkit-scrollbar-track {
   left: 0;
   width: 80px;
   height: 70px;
-}
+} */
 
 .nav-list {
   display: flex;
@@ -86,6 +88,10 @@ body::-webkit-scrollbar-track {
 .nav-list a:hover {
   color: #0700e0;
 }
+
+/* ************************************* */
+
+/* **************************************** */
 
 .btn {
   display: inline-block;
@@ -276,8 +282,13 @@ body::-webkit-scrollbar-track {
     display: block;
   }
 
+  .navv {
+    width: 100%;
+  }
+
   .nav-list {
     position: absolute;
+    width: 100%;
     top: -800px;
     margin-top: 5vh;
     left: 0;
@@ -292,11 +303,11 @@ body::-webkit-scrollbar-track {
     color: white;
   }
 
-  .logo {
+  /* .logo {
     position: fixed;
     top: 15px;
     left: 15px;
-  }
+  } */
 
   .nav-list a {
     color: #fff;
@@ -448,40 +459,44 @@ body::-webkit-scrollbar-track {
   margin-right: 10px;
 }
 
+/* ******************************************
+********************************************* */
 
 
-.users{
+
+.users {
   padding: 25px 30px;
 }
 .users header,
-.users-list a{
+.users-list a {
   display: flex;
   align-items: center;
   padding-bottom: 20px;
   border-bottom: 1px solid #e6e6e6;
   justify-content: space-between;
 }
-.wrapper img{
+.wrapper img {
   object-fit: cover;
   border-radius: 50%;
 }
-.users header img{
+.users header img {
   height: 50px;
   width: 50px;
 }
-:is(.users, .users-list) .content{
+
+:is(.users, .users-list) .content {
   display: flex;
   align-items: center;
 }
-:is(.users, .users-list) .content .details{
+:is(.users, .users-list) .content .details {
   color: #000;
   margin-left: 20px;
 }
-:is(.users, .users-list) .details span{
+:is(.users, .users-list) .details span {
   font-size: 18px;
   font-weight: 500;
 }
-.users header .logout{
+.users header .logout {
   display: block;
   background: #333;
   color: #fff;
@@ -492,17 +507,17 @@ body::-webkit-scrollbar-track {
   border-radius: 5px;
   font-size: 17px;
 }
-.users .search{
+.users .search {
   margin: 20px 0;
   display: flex;
   position: relative;
   align-items: center;
   justify-content: space-between;
 }
-.users .search .text{
+.users .search .text {
   font-size: 18px;
 }
-.users .search input{
+.users .search input {
   position: absolute;
   height: 42px;
   width: calc(100% - 50px);
@@ -515,11 +530,11 @@ body::-webkit-scrollbar-track {
   pointer-events: none;
   transition: all 0.2s ease;
 }
-.users .search input.show{
+.users .search input.show {
   opacity: 1;
   pointer-events: auto;
 }
-.users .search button{
+.users .search button {
   position: relative;
   z-index: 1;
   width: 47px;
@@ -533,66 +548,176 @@ body::-webkit-scrollbar-track {
   border-radius: 0 5px 5px 0;
   transition: all 0.2s ease;
 }
-.users .search button.active{
+.users .search button.active {
   background: #333;
   color: #fff;
 }
-.search button.active i::before{
-  content: '\f00d';
+.search button.active i::before {
+  content: "\f00d";
 }
-.users-list{
+.users-list {
   max-height: 350px;
   overflow-y: auto;
 }
-:is(.users-list, .chat-box)::-webkit-scrollbar{
+:is(.users-list, .chat-box)::-webkit-scrollbar {
   width: 0px;
 }
-.users-list a{
+.users-list a {
   padding-bottom: 10px;
   margin-bottom: 15px;
   padding-right: 15px;
   border-bottom-color: #f1f1f1;
 }
-.users-list a:last-child{
+.users-list a:last-child {
   margin-bottom: 0px;
   border-bottom: none;
 }
-.users-list a img{
+.users-list a img {
   height: 40px;
   width: 40px;
 }
-.users-list a .details p{
+.users-list a .details p {
   color: #67676a;
 }
-.users-list a .status-dot{
+.users-list a .status-dot {
   font-size: 12px;
   color: #468669;
   padding-left: 10px;
 }
-.users-list a .status-dot.offline{
+.users-list a .status-dot.offline {
   color: #ccc;
 }
 
+ /* Add Forest Color Theme */
+ :root {
+  --primary-color: #2b5d2b; /* Dark Green */
+  --secondary-color: #577d57; /* Light Green */
+}
+
+/* Navigation Styling */
+.navigate {
+  display: flex;
+  align-items: center;
+}
+
+.nav_items {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+
+.nav_items li {
+  margin-right: 20px;
+}
+
+.nav_items li:last-child {
+  margin-right: 0;
+}
+
+.nav_items a {
+  text-decoration: none;
+  color: var(--primary-color);
+  transition: color 0.3s ease;
+}
+
+.nav_items a:hover {
+  color: var(--secondary-color);
+}
+
+/* Header Styling */
+.users header .navigate .bx {
+  font-size: 24px;
+  color: var(--primary-color);
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.users header .navigate .bx-x {
+  color: var(--secondary-color);
+}
+
+/* Logout Button */
+.users header .logout {
+  background: var(--primary-color);
+  color: #fff;
+}
+
+.users header .logout:hover {
+  background: var(--secondary-color);
+}
+
+/* Search Styling */
+.users .search input,
+.users .search button {
+  border-color: var(--primary-color);
+}
+
+.users .search button.active {
+  background: var(--primary-color);
+  color: #fff;
+}
+
+/* User List Styling */
+.users-list a {
+  border-bottom-color: #f1f1f1;
+}
+
+.users-list a .status-dot {
+  color: var(--secondary-color);
+}
+
+.users-list a .status-dot.offline {
+  color: #ccc;
+}
+@media only screen and (max-width: 768px) {
+  .nav_items {
+    flex-direction: column;
+    position: absolute;
+    top: 70px;
+    right: 0;
+    background-color: #fff;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    display: none;
+    z-index: 1000;
+  }
+
+  .nav_items.open {
+    display: flex;
+  }
+
+  .nav_items li {
+    margin: 0;
+    padding: 15px;
+    text-align: center;
+    border-bottom: 1px solid #f1f1f1;
+  }
+
+  .users header .navigate .bx {
+    display: block;
+  }
+}
+
 /* Chat Area CSS Start */
-.chat-area header{
+.chat-area header {
   display: flex;
   align-items: center;
   padding: 18px 30px;
 }
-.chat-area header .back-icon{
+.chat-area header .back-icon {
   color: #333;
   font-size: 18px;
 }
-.chat-area header img{
+.chat-area header img {
   height: 45px;
   width: 45px;
   margin: 0 15px;
 }
-.chat-area header .details span{
+.chat-area header .details span {
   font-size: 17px;
   font-weight: 500;
 }
-.chat-box{
+.chat-box {
   position: relative;
   min-height: 500px;
   max-height: 500px;
@@ -600,9 +725,9 @@ body::-webkit-scrollbar-track {
   padding: 10px 30px 20px 30px;
   background: #f7f7f7;
   box-shadow: inset 0 32px 32px -32px rgb(0 0 0 / 5%),
-              inset 0 -32px 32px -32px rgb(0 0 0 / 5%);
+    inset 0 -32px 32px -32px rgb(0 0 0 / 5%);
 }
-.chat-box .text{
+.chat-box .text {
   position: absolute;
   top: 45%;
   left: 50%;
@@ -610,51 +735,50 @@ body::-webkit-scrollbar-track {
   text-align: center;
   transform: translate(-50%, -50%);
 }
-.chat-box .chat{
+.chat-box .chat {
   margin: 15px 0;
 }
-.chat-box .chat p{
+.chat-box .chat p {
   word-wrap: break-word;
   padding: 8px 16px;
-  box-shadow: 0 0 32px rgb(0 0 0 / 8%),
-              0rem 16px 16px -16px rgb(0 0 0 / 10%);
+  box-shadow: 0 0 32px rgb(0 0 0 / 8%), 0rem 16px 16px -16px rgb(0 0 0 / 10%);
 }
-.chat-box .outgoing{
+.chat-box .outgoing {
   display: flex;
 }
-.chat-box .outgoing .details{
+.chat-box .outgoing .details {
   margin-left: auto;
   max-width: calc(100% - 130px);
 }
-.outgoing .details p{
+.outgoing .details p {
   background: #333;
   color: #fff;
   border-radius: 18px 18px 0 18px;
 }
-.chat-box .incoming{
+.chat-box .incoming {
   display: flex;
   align-items: flex-end;
 }
-.chat-box .incoming img{
+.chat-box .incoming img {
   height: 35px;
   width: 35px;
 }
-.chat-box .incoming .details{
+.chat-box .incoming .details {
   margin-right: auto;
   margin-left: 10px;
   max-width: calc(100% - 130px);
 }
-.incoming .details p{
+.incoming .details p {
   background: #fff;
   color: #333;
   border-radius: 18px 18px 18px 0;
 }
-.typing-area{
+.typing-area {
   padding: 18px 30px;
   display: flex;
   justify-content: space-between;
 }
-.typing-area input{
+.typing-area input {
   height: 45px;
   width: calc(100% - 58px);
   font-size: 16px;
@@ -663,7 +787,7 @@ body::-webkit-scrollbar-track {
   outline: none;
   border-radius: 5px 0 0 5px;
 }
-.typing-area button{
+.typing-area button {
   color: #fff;
   width: 55px;
   border: none;
@@ -676,73 +800,78 @@ body::-webkit-scrollbar-track {
   border-radius: 0 5px 5px 0;
   transition: all 0.3s ease;
 }
-.typing-area button.active{
+.typing-area button.active {
   opacity: 1;
   pointer-events: auto;
 }
 
 /* Responive media query */
 @media screen and (max-width: 450px) {
-  .form, .users{
+  .form,
+  .users {
     padding: 20px;
   }
-  .form header{
+  .form header {
     text-align: center;
   }
-  .form form .name-details{
+  .form form .name-details {
     flex-direction: column;
   }
-  .form .name-details .field:first-child{
+  .form .name-details .field:first-child {
     margin-right: 0px;
   }
-  .form .name-details .field:last-child{
+  .form .name-details .field:last-child {
     margin-left: 0px;
   }
 
-  .users header img{
+  .users header img {
     height: 45px;
     width: 45px;
   }
-  .users header .logout{
+  .users header .logout {
     padding: 6px 10px;
     font-size: 16px;
   }
-  :is(.users, .users-list) .content .details{
+  :is(.users, .users-list) .content .details {
     margin-left: 15px;
   }
 
-  .users-list a{
+  .users-list a {
     padding-right: 10px;
   }
 
-  .chat-area header{
+  .chat-area header {
     padding: 15px 20px;
   }
-  .chat-box{
+  .chat-box {
     min-height: 400px;
     padding: 10px 15px 15px 20px;
   }
-  .chat-box .chat p{
+  .chat-box .chat p {
     font-size: 15px;
   }
-  .chat-box .outogoing .details{
+  .chat-box .outogoing .details {
     max-width: 230px;
   }
-  .chat-box .incoming .details{
+  .chat-box .incoming .details {
     max-width: 265px;
   }
-  .incoming .details img{
+  .incoming .details img {
     height: 30px;
     width: 30px;
   }
-  .chat-area form{
+  .chat-area form {
     padding: 20px;
   }
-  .chat-area form input{
+  .chat-area form input {
     height: 40px;
     width: calc(100% - 48px);
   }
-  .chat-area form button{
+  .chat-area form button {
     width: 45px;
   }
 }
+
+
+
+

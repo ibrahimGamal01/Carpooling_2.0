@@ -46,8 +46,8 @@ CREATE TABLE `rides` (
   `status` ENUM('upcoming', 'in progress', 'completed', 'canceled') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Create the `ride_passengers` table
-CREATE TABLE `ride_passengers` (
+-- Create the `passengers` table
+CREATE TABLE `passengers` (
   `ride_id` INT NOT NULL,
   `passenger_id` INT NOT NULL,
   PRIMARY KEY (`ride_id`, `passenger_id`),
@@ -64,14 +64,6 @@ CREATE TABLE `bookings` (
   `booking_time` TIME NOT NULL,
   FOREIGN KEY (`ride_id`) REFERENCES `rides`(`ride_id`),
   FOREIGN KEY (`passenger_id`) REFERENCES `users`(`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- Create the `passengers` table
-CREATE TABLE `passengers` (
-  `passenger_id` INT AUTO_INCREMENT PRIMARY KEY,
-  `ride_id` INT NOT NULL,
-  `name` VARCHAR(255) NOT NULL,
-  FOREIGN KEY (`ride_id`) REFERENCES `rides`(`ride_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- Create the `messages` table

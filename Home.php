@@ -10,24 +10,7 @@ include_once "php/config.php"; // Include other necessary files
     <style>
         body {
             background-image: url(src/unfccc_background.jpg);
-            /* height: 100vh; */
         }
-
-        .logo {
-            display: block;
-            margin: 10px;
-        }
-
-        .nav-list li a {
-            color: rgb(0, 0, 0);
-        }
-
-        .hero {
-            /* display: flex;
-            justify-content: center;
-            align-items: center; */
-        }
-
         .btn-container {
             display: flex;
             /* justify-content: center;
@@ -79,19 +62,11 @@ include_once "php/config.php"; // Include other necessary files
             }
         }
 
-        @property --rotate {
-            syntax: "<angle>";
-            initial-value: 132deg;
-            inherits: false;
-        }
-
         :root {
-            --card-height: 39vh;
+            --card-height: 37vh;
             --card-width: calc(var(--card-height) / 1.5);
             --forest-color: #228B22;
-            /* Forest green */
             --sky-color: #87CEEB;
-            /* Sky blue */
         }
 
         .btn-container {
@@ -187,14 +162,6 @@ include_once "php/config.php"; // Include other necessary files
             }
         }
 
-        a {
-            color: var(--forest-color);
-            text-decoration: none;
-            font-family: sans-serif;
-            font-weight: bold;
-            margin-top: 2rem;
-        }
-
         .car-icon {
             width: 100px;
             height: 100px;
@@ -206,6 +173,8 @@ include_once "php/config.php"; // Include other necessary files
             text-decoration: solid;
             color: #000000;
         }
+        #logout{
+            background-color: #201eae6c;
         }
     </style>
 </head>
@@ -213,6 +182,7 @@ include_once "php/config.php"; // Include other necessary files
 <body>
     <div class="wrapper">
         <section class="users">
+
             <header>
                 <div class="content">
                     <?php
@@ -223,7 +193,7 @@ include_once "php/config.php"; // Include other necessary files
                     ?>
                     <img src="php/images/<?php echo $row['img']; ?>" alt="">
                     <div class="details">
-                        <span style="font-weight: bold;">
+                        <span>
                             <?php echo $row['fname'] . " " . $row['lname'] ?>
                         </span>
                         <p>
@@ -231,36 +201,36 @@ include_once "php/config.php"; // Include other necessary files
                         </p>
                     </div>
                 </div>
-                <nav class="navv">
+                <div class="navigate">
                     <div class="bx bx-menu" id="menu-icon"></div>
-                    <ul class="nav-list">
-                        <li><a href="Home.php">Home</a></li>
-                        <li><a href="passenger.php">Passenger</a></li>
-                        <li><a href="driver.php">Driver</a></li>
+                    <ul class="nav_items">
+                        <li><a href="Home.php" class="logout">Home</a></li>
+                        <li><a href="passenger.php" class="logout">Passenger</a></li>
+                        <li><a href="driver.php" class="logout">Driver</a></li>
+                        <li><a href="users.php" class="logout">Chat</a></li>
                         <li><a href="php/logout.php?logout_id=<?php echo $row['unique_id']; ?>"
-                                class="logout">Logout</a></li>
+                                class="logout" id="logout">Logout</a></li>
                     </ul>
-                </nav>
-
+                </div>
             </header>
-        </section>
+                <div class="btn-container">
+                    <a href="passenger.php" class="btn inpage">I'm a Passenger <img src="src/car-seat-with-seatbelt.svg"
+                            alt="Car Icon" class="car-icon"></a>
 
-        <section class="hero">
-            <div class="btn-container">
-                <a href="passenger.php" class="btn inpage">I'm a Passenger <img src="src/car-seat-with-seatbelt.svg"
-                        alt="Car Icon" class="car-icon"></a>
-
-                <a href="driver.php" class="btn inpage">I'm a Driver <img src="src/nice-car.svg" alt="Car Icon"
-                        class="car-icon"></a>
-            </div>
+                    <a href="driver.php" class="btn inpage">I'm a Driver <img src="src/nice-car.svg" alt="Car Icon"
+                            class="car-icon"></a>
+                </div>
         </section>
     </div>
+    <script>
+        let menu = document.querySelector('#menu-icon');
+        let navList = document.querySelector('.nav_items');
 
-
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js"></script>
-    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
-    <script src="./script.js"></script>
+        menu.onclick = () => {
+            menu.classList.toggle('bx-x');
+            navList.classList.toggle('open');
+        }
+    </script>
 </body>
 
 </html>

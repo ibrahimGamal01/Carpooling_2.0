@@ -34,12 +34,6 @@ if (isset($_SESSION['unique_id'])) {
 
         .sidebar-container {
             background-color: rgba(113, 112, 112, 0.21);
-            /* padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-            display: flex;
-            flex-direction: row;
-            align-items: center; */
         }
 
         .sidebar {
