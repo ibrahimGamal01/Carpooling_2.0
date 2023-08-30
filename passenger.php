@@ -1,36 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
+<?php
+include_once "auth_check.php"; // Include the authentication check
+include_once "php/config.php"; // Include other necessary files
+?>
 
-<head>
-    <meta charset="UTF-8">
-    <title>Carpooling UNFCCC</title>
-    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700;800;900&display=swap"
-        rel="stylesheet">
-    <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
-    <link rel="stylesheet" href="./style.css">
-
-    <link rel="icon" type="image/png" href="src/favicon/android-chrome-192x192.png" sizes="192x192">
-    <link rel="icon" type="image/png" href="src/favicon/android-chrome-512x512.png" sizes="512x512">
-    <link rel="apple-touch-icon" href="src/favicon/apple-touch-icon.png">
-    <link rel="icon" type="image/x-icon" href="src/favicon/favicon.ico">
-    <link rel="icon" type="image/png" href="src/favicon/favicon-16x16.png" sizes="16x16">
-    <link rel="icon" type="image/png" href="src/favicon/favicon-32x32.png" sizes="32x32">
-
-    <!-- Load Leaflet from CDN -->
-    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
-
-    <!-- original CSS of the routing-machine -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.css" />
-
-    <!-- Load Leaflet from CDN -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"
-        integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
-        crossorigin="" />
-    <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"
-        integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og=="
-        crossorigin=""></script>
-
-</head>
+<?php include_once "header.php"; ?>
 
 <style>
     body{
@@ -64,11 +37,9 @@
         <a href="#" class="logo"><img src="src/unfccc_logo.png" alt="Logo" class="logo-image"></a>
         <div class="bx bx-menu" id="menu-icon"></div>
         <ul class="nav-list">
-            <li><a href="Home.html">Home</a></li>
-            <li><a href="passenger.html">Passenger</a></li>
-            <li><a href="driver.html">Driver</a></li>
-            <li><a href="map.html">Map</a></li>
-
+            <li><a href="Home.php">Home</a></li>
+            <li><a href="passenger.php">Passenger</a></li>
+            <li><a href="driver.php">Driver</a></li>
         </ul>
     </nav>
 

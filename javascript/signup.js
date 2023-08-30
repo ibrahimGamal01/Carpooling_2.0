@@ -15,7 +15,7 @@ continueBtn.onclick = ()=>{
               let data = xhr.response;
               if(data === "success"){
                 // location.href="users.php";
-                location.href="Home.html";
+                location.href="Home.php";
               }else{
                 errorText.style.display = "block";
                 errorText.textContent = data;

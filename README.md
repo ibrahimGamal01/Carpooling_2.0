@@ -17,8 +17,8 @@ link: [Activity Diagram Lucidchart](https://lucid.app/documents/embedded/612ab06
 
 The file structure of this project is organized as follows:
 
-- `passenger.html`: HTML file for the passenger interface.
-- `driver.html`: HTML file for the driver interface.
+- `passenger.php`: HTML file for the passenger interface.
+- `driver.php`: HTML file for the driver interface.
 - `styles.css`: CSS file for the basic interfcaes.
 - `database.sql`: SQL script for creating the database schema.
 - `php/`: Directory containing PHP scripts used for server-side processing.

@@ -1,27 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
+<?php
+include_once "auth_check.php"; // Include the authentication check
+include_once "php/config.php"; // Include other necessary files
+?>
+
+<?php include_once "header.php"; ?>
+
 
 <head>
-    <meta charset="UTF-8">
-    <title>Carpooling UNFCCC</title>
-    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700;800;900&display=swap"
-        rel="stylesheet">
-     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@2.0.7/css/boxicons.min.css">
-    <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.css">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
-    <link rel="stylesheet" href="./style.css">
-
-    <link rel="icon" type="image/png" href="src/favicon/android-chrome-192x192.png" sizes="192x192">
-    <link rel="icon" type="image/png" href="src/favicon/android-chrome-512x512.png" sizes="512x512">
-    <link rel="apple-touch-icon" href="src/favicon/apple-touch-icon.png">
-    <link rel="icon" type="image/x-icon" href="src/favicon/favicon.ico">
-    <link rel="icon" type="image/png" href="src/favicon/favicon-16x16.png" sizes="16x16">
-    <link rel="icon" type="image/png" href="src/favicon/favicon-32x32.png" sizes="32x32">
-
     <style>
         body {
             background-image: url(src/unfccc_background.jpg);
+            /* height: 100vh; */
         }
 
         .logo {
@@ -34,22 +23,21 @@
         }
 
         .hero {
-            display: flex;
+            /* display: flex;
             justify-content: center;
-            align-items: center;
-            height: 100vh;
+            align-items: center; */
         }
 
         .btn-container {
             display: flex;
-            justify-content: center;
-            align-items: center;
+            /* justify-content: center;
+            align-items: center; */
         }
 
         .btn {
             display: inline-block;
-            width: 300px;
-            height: 300px;
+            width: 250px;
+            height: 250px;
             margin: 10px;
             background-color: #3e9bc699;
             color: rgb(0, 0, 0);
@@ -87,7 +75,7 @@
 
             .btn {
                 width: 250px;
-                height: 250px;
+                height: 150px;
             }
         }
 
@@ -212,32 +200,63 @@
             height: 100px;
             z-index: 1;
         }
-    
+
+        .details {
+            margin-left: 15px;
+            text-decoration: solid;
+            color: #000000;
+        }
+        }
     </style>
 </head>
 
 <body>
-    <nav class="navv">
-        <a href="#" class="logo"><img src="src/unfccc_logo.png" alt="Logo" class="logo-image"></a>
-        <div class="bx bx-menu" id="menu-icon"></div>
+    <div class="wrapper">
+        <section class="users">
+            <header>
+                <div class="content">
+                    <?php
+                    $sql = mysqli_query($conn, "SELECT * FROM users WHERE unique_id = {$_SESSION['unique_id']}");
+                    if (mysqli_num_rows($sql) > 0) {
+                        $row = mysqli_fetch_assoc($sql);
+                    }
+                    ?>
+                    <img src="php/images/<?php echo $row['img']; ?>" alt="">
+                    <div class="details">
+                        <span style="font-weight: bold;">
+                            <?php echo $row['fname'] . " " . $row['lname'] ?>
+                        </span>
+                        <p>
+                            <?php echo $row['status']; ?>
+                        </p>
+                    </div>
+                </div>
+                <nav class="navv">
+                    <div class="bx bx-menu" id="menu-icon"></div>
+                    <ul class="nav-list">
+                        <li><a href="Home.php">Home</a></li>
+                        <li><a href="passenger.php">Passenger</a></li>
+                        <li><a href="driver.php">Driver</a></li>
+                        <li><a href="php/logout.php?logout_id=<?php echo $row['unique_id']; ?>"
+                                class="logout">Logout</a></li>
+                    </ul>
+                </nav>
 
-        <ul class="nav-list">
-            <li><a href="Home.html">Home</a></li>
-            <li><a href="passenger.html">Passenger</a></li>
-            <li><a href="driver.html">Driver</a></li>
-            <li><a href="map.html">Map</a></li>
-        </ul>
-    </nav>
+            </header>
+        </section>
 
-    <section class="hero">
-        <div class="btn-container">
-            <a href="passenger.html" class="btn inpage">I'm a Passenger <img src="src/car-seat-with-seatbelt.svg"
-                    alt="Car Icon" class="car-icon"></a>
+        <section class="hero">
+            <div class="btn-container">
+                <a href="passenger.php" class="btn inpage">I'm a Passenger <img src="src/car-seat-with-seatbelt.svg"
+                        alt="Car Icon" class="car-icon"></a>
 
-            <a href="driver.html" class="btn inpage">I'm a Driver <img src="src/nice-car.svg" alt="Car Icon"
-                    class="car-icon"></a>
-        </div>
-    </section>
+                <a href="driver.php" class="btn inpage">I'm a Driver <img src="src/nice-car.svg" alt="Car Icon"
+                        class="car-icon"></a>
+            </div>
+        </section>
+    </div>
+
+
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js"></script>
     <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
