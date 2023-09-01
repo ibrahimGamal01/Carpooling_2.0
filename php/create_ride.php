@@ -14,8 +14,7 @@ if (empty($pickupLocation) || empty($dropoffLocation) || empty($seats)) {
 }
 
 // Function to get coordinates using PositionStack Geocoding API
-function getCoordinates($query)
-{
+function getCoordinates($query){
   $apiKey = '54852a7462e1c40cc8fca727234d19cf';
   $apiUrl = 'http://api.positionstack.com/v1/forward?access_key=' . $apiKey . '&query=' . urlencode($query);
 

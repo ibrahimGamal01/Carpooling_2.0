@@ -128,6 +128,11 @@ include_once "php/config.php"; // Include other necessary files
             font-size: 14px;
         }
     }
+
+    #driver_page{
+        background-color: darkcyan;
+        color: white;
+    }
 </style>
 
 
@@ -158,7 +163,7 @@ include_once "php/config.php"; // Include other necessary files
                     <ul class="nav_items">
                         <li><a href="Home.php" class="logout">Home</a></li>
                         <li><a href="passenger.php" class="logout">Passenger</a></li>
-                        <li><a href="driver.php" class="logout">Driver</a></li>
+                        <li><a href="driver.php" class="logout" id="driver_page">Driver</a></li>
                         <li><a href="users.php" class="logout">Chat</a></li>
                         <li><a href="php/logout.php?logout_id=<?php echo $row['unique_id']; ?>" class="logout"
                                 id="logout">Logout</a></li>
@@ -210,7 +215,7 @@ include_once "php/config.php"; // Include other necessary files
 <script>
     // ***************************** Navbar ***************************** //
     let menu = document.querySelector('#menu-icon');
-    let navList = document.querySelector('.nav-list');
+    let navList = document.querySelector('.nav_items');
 
     menu.onclick = () => {
         menu.classList.toggle('bx-x');

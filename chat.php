@@ -1,4 +1,5 @@
 <?php 
+// Path: chat.php
   session_start();
   include_once "php/config.php";
   if(!isset($_SESSION['unique_id'])){
@@ -6,6 +7,28 @@
   }
 ?>
 <?php include_once "header.php"; ?>
+
+<!-- -- Create the `users` table
+CREATE TABLE `users` (
+  `user_id` INT PRIMARY KEY AUTO_INCREMENT,
+  `unique_id` INT NOT NULL,
+  `fname` VARCHAR(255) NOT NULL,
+  `lname` VARCHAR(255) NOT NULL,
+  `email` VARCHAR(255) NOT NULL,
+  `password` VARCHAR(255) NOT NULL,
+  `img` VARCHAR(255) NOT NULL,
+  `status` VARCHAR(255) NOT NULL,
+  `user_type` ENUM('regular', 'admin') NOT NULL DEFAULT 'regular'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Create the `messages` table
+CREATE TABLE `messages` (
+  `msg_id` INT PRIMARY KEY AUTO_INCREMENT,
+  `incoming_msg_id` INT NOT NULL,
+  `outgoing_msg_id` INT NOT NULL,
+  `msg` VARCHAR(1000) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4; -->
+
 <body>
   <div class="wrapper">
     <section class="chat-area">

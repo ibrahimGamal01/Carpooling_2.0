@@ -43,6 +43,18 @@ CREATE TABLE `messages` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 
+-- Create a new table for groups
+CREATE TABLE `groups` (
+  `group_id` INT PRIMARY KEY AUTO_INCREMENT,
+  `group_name` VARCHAR(255) NOT NULL,
+  `members` VARCHAR(1000) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Modify the `messages` table to include `group_id`
+ALTER TABLE `messages` ADD `group_id` INT NOT NULL;
+
+
+
 -- -----------------------------------------------------------------------------
 
 -- Create the `ride_passengers` table

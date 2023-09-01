@@ -153,6 +153,10 @@ include_once "php/config.php";
         width: 100%;
         height: 100%;
     }
+    #passenger_page{
+        background-color: darkcyan;
+        color: white;
+    }
 </style>
 
 <body>
@@ -181,7 +185,7 @@ include_once "php/config.php";
                     <div class="bx bx-menu" id="menu-icon" style="position: relative;"></div>
                     <ul class="nav_items">
                         <li><a href="Home.php" class="logout">Home</a></li>
-                        <li><a href="passenger.php" class="logout">Passenger</a></li>
+                        <li><a href="passenger.php" class="logout" id="passenger_page">Passenger</a></li>
                         <li><a href="driver.php" class="logout">Driver</a></li>
                         <li><a href="users.php" class="logout">Chat</a></li>
                         <li><a href="php/logout.php?logout_id=<?php echo $row['unique_id']; ?>" class="logout"
@@ -239,7 +243,7 @@ include_once "php/config.php";
     let rideDetails = [];
 
     let menu = document.querySelector('#menu-icon');
-    let navList = document.querySelector('.nav-list');
+    let navList = document.querySelector('.nav_items');
 
     menu.onclick = () => {
         menu.classList.toggle('bx-x');
