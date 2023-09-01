@@ -5,6 +5,14 @@ include_once "php/config.php"; // Include other necessary files
 
 <?php include_once "header.php"; ?>
 
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@latest/css/boxicons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+</head>
+
 <style>
     body {
         margin: 0;
@@ -35,7 +43,7 @@ include_once "php/config.php"; // Include other necessary files
 
     .sidebar-container {
         display: flex;
-        height: 70vh;
+        height: 80vh;
         width: 100%;
         max-width: 100%;
     }
@@ -200,35 +208,22 @@ include_once "php/config.php"; // Include other necessary files
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js"></script>
 <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
 <script>
+    // ***************************** Navbar ***************************** //
     let menu = document.querySelector('#menu-icon');
-    let navList = document.querySelector('.nav_items');
+    let navList = document.querySelector('.nav-list');
 
     menu.onclick = () => {
         menu.classList.toggle('bx-x');
         navList.classList.toggle('open');
     }
 
+    // ***************************** Create Ride ***************************** //
+
     const createRideForm = document.getElementById('create-ride-form');
-    const pickupInput = document.getElementById('pickupLocation');
-    const dropoffInput = document.getElementById('dropoffLocation');
-
-    pickupInput.addEventListener('keydown', event => {
-        if (event.key === 'Enter') {
-            event.preventDefault();
-            geocoder.markGeocode({ query: pickupInput.value });
-        }
-    });
-
-    dropoffInput.addEventListener('keydown', event => {
-        if (event.key === 'Enter') {
-            event.preventDefault();
-            geocoder.markGeocode({ query: dropoffInput.value });
-        }
-    });
-
     createRideForm.addEventListener('submit', event => {
         event.preventDefault();
         createRide();
+        // updateMapCoordinates(pickupLocation, dropoffLocation);
     });
 
     function createRide() {
@@ -301,8 +296,9 @@ include_once "php/config.php"; // Include other necessary files
             });
     }
 
-
-    const map = L.map('map').setView([50.704129514100735, 7.16153100070237], 14);
+    // ***************************** Map ***************************** //
+    // Initialize the map
+    const map = L.map('map').setView([50.704129514100735, 7.16153100070237], 16);
 
     // Add tile layer to the map
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -321,46 +317,12 @@ include_once "php/config.php"; // Include other necessary files
             const result = event.geocode;
             map.fitBounds(result.bbox);
             L.marker(result.center).addTo(map).bindPopup(result.name || result.properties.formatted).openPopup();
-            if (pickupInput.value === "") {
-                pickupInput.value = result.name || result.properties.formatted;
-            } else if (dropoffInput.value === "") {
-                dropoffInput.value = result.name || result.properties.formatted;
-            }
         })
         .addTo(map);
-        
-    function connectInputToMapSearch(inputField) {
-        inputField.addEventListener('keydown', event => {
-            if (event.key === 'Enter') {
-                event.preventDefault();
-                // Make sure the geocoder is correctly initialized before calling markGeocode
-                if (geocoder) {
-                    geocoder.markGeocode({ query: inputField.value });
-                }
-            }
-        });
-    }
 
-    // Connect pickup and drop-off input fields to map search
-    connectInputToMapSearch(pickupInput);
-    connectInputToMapSearch(dropoffInput);
 </script>
 
-<!-- Connect the map search to the form inputs so that the form dropoff, pickup inputs when you write something in any of
-them and click enter they act as the search bar in the map showing suggestions and
 
-2 Options:
-1- Connect each of the inputs to the search and show the suggestions below it when enter is clicked
-2- Connect the inputs to the search so that when enter is clicked for an input, it sends what is written to the search
-bar that is already in the map and moves the curser there -->
-<!-- 
-rewrite the full js code adding the functionality:
-Connect the map search to the form inputs so that the form dropoff, pickup inputs when you write something in any of
-them and click enter they act as the search bar in the map showing suggestions and
-
-suggestion:
-Connect the inputs to the search so that when enter is clicked for an input, it sends what is written to the search bar
-that is already in the map and moves the curser there -->
 </body>
 
 </html>

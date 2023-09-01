@@ -1,6 +1,6 @@
 <?php
-include_once "auth_check.php"; // Include the authentication check
-include_once "php/config.php"; // Include other necessary files
+include_once "auth_check.php";
+include_once "php/config.php";
 ?>
 
 <?php include_once "header.php"; ?>
@@ -35,7 +35,7 @@ include_once "php/config.php"; // Include other necessary files
 
     .sidebar-container {
         display: flex;
-        height: 70vh;
+        height: 80vh;
         width: 100%;
         max-width: 100%;
     }
@@ -145,6 +145,14 @@ include_once "php/config.php"; // Include other necessary files
         background-color: #4CAF50;
         color: white;
     }
+
+    .ride-details {
+        margin-top: 20px;
+        border-radius: 5px;
+        max-width: 100%;
+        width: 100%;
+        height: 100%;
+    }
 </style>
 
 <body>
@@ -223,118 +231,8 @@ include_once "php/config.php"; // Include other necessary files
 </body>
 <script
     src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-routing-machine/3.2.12/leaflet-routing-machine.min.js"></script>
-
 <script>
-    // ****************************** Map **********************************//
-    let routingControl;
 
-    function updateMapCoordinates(rideId) {
-        const selectedRide = rideCoordinates.find(ride => ride.ride_id === rideId);
-
-        if (selectedRide) {
-            const pickupLatLng = L.latLng(selectedRide.pickup_latitude, selectedRide.pickup_longitude);
-            const dropoffLatLng = L.latLng(selectedRide.dropoff_latitude, selectedRide.dropoff_longitude);
-
-            // Clear previous route and markers if any
-            if (routingControl) {
-                map.removeControl(routingControl);
-            }
-            map.eachLayer(layer => {
-                if (layer instanceof L.Marker) {
-                    map.removeLayer(layer);
-                }
-            });
-
-            routingControl = L.Routing.control({
-                waypoints: [
-                    pickupLatLng,
-                    dropoffLatLng
-                ],
-                routeWhileDragging: true,
-                routeDragInterval: 500,
-                collapsible: true,
-                reverseWaypoints: false,
-                showAlternatives: false,
-                createMarker: function (i, wp, nWps) {
-                    // ... (marker creation code)
-                },
-            }).addTo(map);
-
-            // Change the view to fit the route
-            map.fitBounds([pickupLatLng, dropoffLatLng]);
-
-            // Add pickup and dropoff markers
-            L.marker(pickupLatLng, { icon: svgpin_Icon2 }).addTo(map).bindPopup("Pickup Location");
-            L.marker(dropoffLatLng, { icon: svgpin_Icon }).addTo(map).bindPopup("Dropoff Location");
-
-            // Fit the map bounds to include pickup and dropoff locations
-            const bounds = L.latLngBounds([pickupLatLng, dropoffLatLng]);
-            map.fitBounds(bounds);
-
-            // Scroll to the map
-            const mapContainer = document.getElementById('map');
-            mapContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
-
-        }
-    }
-
-
-    //This is the center of the map
-    const cntr_loc = L.latLng(50.704129514100735, 7.16153100070237);
-
-    //This is the location of the marker
-    const orig_loc = L.latLng(50.7322, 7.0961);
-    const dest_loc = L.latLng(50.718815, 7.125222);
-
-    var zoom = 14;
-
-    //This is the map
-    var map = L.map("map", {
-        preferCanvas: false,
-    }).setView(cntr_loc, zoom);
-
-    //This map tiles is simple and no hassles.
-    L.tileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-        attribution: "Map data &copy; OpenStreetMap contributors",
-    }).addTo(map);
-
-    //This is the marker
-    const checkmk = `<svg width="24" height="24" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg"><path stroke="black" stroke-width="1.5%" opacity="0.8" fill="brown" d="M10,17L6,13L7.41,11.59L10,14.17L16.59,7.58L18,9M12,1L3,5V11C3,16.55 6.84,21.74 12,23C17.16,21.74 21,16.55 21,11V5L12,1Z"></path></svg>`;
-
-    function checkmk_mk(color) {
-        // assume checkmk has `brown` only 1 place
-        return checkmk.replace(/brown/g, color);
-    }
-
-    const svgpin_Url = encodeURI("data:image/svg+xml;utf-8," + checkmk_mk("red"));
-    const svgpin_Url2 = encodeURI(
-        "data:image/svg+xml;utf-8," + checkmk_mk("green")
-    );
-    const svgpin_Url3 = encodeURI(
-        "data:image/svg+xml;utf-8," + checkmk_mk("black")
-    );
-
-    const svgpin_Icon = L.icon({
-        iconUrl: svgpin_Url,
-        iconSize: [24, 24],
-        iconAnchor: [12, 24],
-        popupAnchor: [0, -22],
-    });
-    const svgpin_Icon2 = L.icon({
-        iconUrl: svgpin_Url2,
-        iconSize: [24, 24],
-        iconAnchor: [12, 24],
-        popupAnchor: [0, -22],
-    });
-    const svgpin_Icon3 = L.icon({
-        iconUrl: svgpin_Url3,
-        iconSize: [24, 24],
-        iconAnchor: [12, 24],
-        popupAnchor: [0, -22],
-    });
-
-
-    // ****************************** Join Ride **********************************//
     const passengerName = "Ibrahim";
 
     let rideCoordinates = [];
@@ -352,7 +250,7 @@ include_once "php/config.php"; // Include other necessary files
         const formData = new FormData();
         formData.append('ride_id', rideId);
 
-        fetch('../php/join_ride.php', {
+        fetch('php/join_ride.php', {
             method: 'POST',
             body: formData,
         })
@@ -474,6 +372,7 @@ include_once "php/config.php"; // Include other necessary files
 
 
     // ************************************* All Rides *************************************** //
+
     const findRidesForm = document.getElementById('findRidesForm');
     findRidesForm.addEventListener('submit', event => {
         event.preventDefault();
@@ -558,8 +457,116 @@ include_once "php/config.php"; // Include other necessary files
             });
     }
 
-</script>
+    // ****************************** Update Map **********************************//
 
+    let routingControl;
+
+    function updateMapCoordinates(rideId) {
+        const selectedRide = rideCoordinates.find(ride => ride.ride_id === rideId);
+
+        if (selectedRide) {
+            const pickupLatLng = L.latLng(selectedRide.pickup_latitude, selectedRide.pickup_longitude);
+            const dropoffLatLng = L.latLng(selectedRide.dropoff_latitude, selectedRide.dropoff_longitude);
+
+            // Clear previous route and markers if any
+            if (routingControl) {
+                map.removeControl(routingControl);
+            }
+            map.eachLayer(layer => {
+                if (layer instanceof L.Marker) {
+                    map.removeLayer(layer);
+                }
+            });
+
+            routingControl = L.Routing.control({
+                waypoints: [
+                    pickupLatLng,
+                    dropoffLatLng
+                ],
+                routeWhileDragging: true,
+                routeDragInterval: 500,
+                collapsible: true,
+                reverseWaypoints: false,
+                showAlternatives: false,
+                createMarker: function (i, wp, nWps) {
+                    // ... (marker creation code)
+                },
+            }).addTo(map);
+
+            // Change the view to fit the route
+            map.fitBounds([pickupLatLng, dropoffLatLng]);
+
+            // Add pickup and dropoff markers
+            L.marker(pickupLatLng, { icon: svgpin_Icon2 }).addTo(map).bindPopup("Pickup Location");
+            L.marker(dropoffLatLng, { icon: svgpin_Icon }).addTo(map).bindPopup("Dropoff Location");
+
+            // Fit the map bounds to include pickup and dropoff locations
+            const bounds = L.latLngBounds([pickupLatLng, dropoffLatLng]);
+            map.fitBounds(bounds);
+
+            // Scroll to the map
+            const mapContainer = document.getElementById('map');
+            mapContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+        }
+    }
+
+    // ****************************** Map **********************************//
+
+    //This is the center of the map
+    const cntr_loc = L.latLng(50.704129514100735, 7.16153100070237);
+
+    //This is the location of the marker
+    const orig_loc = L.latLng(50.7322, 7.0961);
+    const dest_loc = L.latLng(50.718815, 7.125222);
+
+    var zoom = 16;
+
+    //This is the map
+    var map = L.map("map", {
+        preferCanvas: false,
+    }).setView(cntr_loc, zoom);
+
+    //This map tiles is simple and no hassles.
+    L.tileLayer("http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        attribution: "Map data &copy; OpenStreetMap contributors",
+    }).addTo(map);
+
+    //This is the marker
+    const checkmk = `<svg width="24" height="24" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg"><path stroke="black" stroke-width="1.5%" opacity="0.8" fill="brown" d="M10,17L6,13L7.41,11.59L10,14.17L16.59,7.58L18,9M12,1L3,5V11C3,16.55 6.84,21.74 12,23C17.16,21.74 21,16.55 21,11V5L12,1Z"></path></svg>`;
+
+    function checkmk_mk(color) {
+        // assume checkmk has `brown` only 1 place
+        return checkmk.replace(/brown/g, color);
+    }
+
+    const svgpin_Url = encodeURI("data:image/svg+xml;utf-8," + checkmk_mk("red"));
+    const svgpin_Url2 = encodeURI(
+        "data:image/svg+xml;utf-8," + checkmk_mk("green")
+    );
+    const svgpin_Url3 = encodeURI(
+        "data:image/svg+xml;utf-8," + checkmk_mk("black")
+    );
+
+    const svgpin_Icon = L.icon({
+        iconUrl: svgpin_Url,
+        iconSize: [24, 24],
+        iconAnchor: [12, 24],
+        popupAnchor: [0, -22],
+    });
+    const svgpin_Icon2 = L.icon({
+        iconUrl: svgpin_Url2,
+        iconSize: [24, 24],
+        iconAnchor: [12, 24],
+        popupAnchor: [0, -22],
+    });
+    const svgpin_Icon3 = L.icon({
+        iconUrl: svgpin_Url3,
+        iconSize: [24, 24],
+        iconAnchor: [12, 24],
+        popupAnchor: [0, -22],
+    });
+</script>
 </body>
 
 </html>
