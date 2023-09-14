@@ -18,28 +18,6 @@ if (!isset($_SESSION['unique_id'])) {
     background-color: darkcyan;
     color: white;
   }
-
-  /* Add these styles at the bottom of your existing styles */
-  .create-group-button {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-  }
-
-  .create-group-button button {
-    background-color: darkcyan;
-    color: white;
-    border: none;
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    font-size: 20px;
-    cursor: pointer;
-  }
-
-  .create-group-button button:hover {
-    background-color: teal;
-  }
 </style>
 
 <body>
@@ -88,10 +66,6 @@ if (!isset($_SESSION['unique_id'])) {
     </section>
   </div>
 
-  <div class="create-group-button">
-    <button id="create-group">Create Group</button>
-  </div>
-
 
   <script src="javascript/users.js"></script>
   <script>
@@ -102,37 +76,6 @@ if (!isset($_SESSION['unique_id'])) {
       menu.classList.toggle('bx-x');
       navList.classList.toggle('open');
     }
-
-    const createGroupButton = document.getElementById('create-group');
-
-    createGroupButton.addEventListener('click', () => {
-      const groupName = prompt('Enter the group name:');
-      if (groupName) {
-        fetch('php/create-group.php', {
-          method: 'POST',
-          body: JSON.stringify({ groupName }),
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        })
-          .then(response => response.json())
-          .then(data => {
-            // Handle the response from the server (e.g., display success message)
-            if (data.success) {
-              alert(data.success); // Display success message
-              // You can also update the group list or take other actions as needed
-            } else {
-              alert(data.error); // Display error message
-            }
-          })
-          .catch(error => {
-            // Handle any errors
-            console.error('Error creating group:', error);
-          });
-      }
-    });
-
-
   </script>
 
 </body>

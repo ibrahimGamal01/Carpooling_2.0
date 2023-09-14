@@ -1,12 +1,30 @@
 <?php
+// Path: php/create_ride.php
 session_start();
 include_once "config.php";
+
+// CREATE TABLE `rides` (
+//   `ride_id` INT AUTO_INCREMENT PRIMARY KEY,
+//   `driver_id` INT NOT NULL,
+//   `pickup_location` VARCHAR(255) NOT NULL,
+//   `dropoff_location` VARCHAR(255) NOT NULL,
+//   `pickup_latitude` DECIMAL(10, 8),
+//   `pickup_longitude` DECIMAL(11, 8),
+//   `dropoff_latitude` DECIMAL(10, 8),
+//   `dropoff_longitude` DECIMAL(11, 8),
+//   `available_seats` INT NOT NULL,
+//   `ride_start_date` DATE NOT NULL,
+//   `ride_start_time` TIME NOT NULL,
+//   `status` ENUM('upcoming', 'in progress', 'completed', 'canceled') NOT NULL
+// ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 // Retrieve ride details from the request
 $requestData = json_decode(file_get_contents('php://input'), true);
 $pickupLocation = isset($requestData['pickupLocation']) ? $requestData['pickupLocation'] : '';
 $dropoffLocation = isset($requestData['dropoffLocation']) ? $requestData['dropoffLocation'] : '';
 $seats = isset($requestData['seats']) ? $requestData['seats'] : '';
+$rideStartDate = isset($requestData['rideStartDate']) ? $requestData['rideStartDate'] : '';
+$rideStartTime = isset($requestData['rideStartTime']) ? $requestData['rideStartTime'] : '';
 
 // Validate the required fields
 if (empty($pickupLocation) || empty($dropoffLocation) || empty($seats)) {
@@ -38,19 +56,19 @@ function getCoordinates($query){
 }
 
 // Get the driver's ID (You can modify this part to match your authentication system)
-$driverId = 16; // Assuming the driver's ID is 13
+$driverId = $_SESSION['unique_id'];
 
 // Get coordinates for pickup and dropoff locations
 $pickupCoordinates = getCoordinates($pickupLocation);
 $dropoffCoordinates = getCoordinates($dropoffLocation);
 
-if (!$pickupCoordinates || !$dropoffCoordinates) {
-  die("Error: Failed to get coordinates for pickup or drop-off location.");
+if (empty($pickupLocation) || empty($dropoffLocation) || empty($seats) || empty($rideStartDate) || empty($rideStartTime)) {
+  die("Error: Required fields are missing.");
 }
 
 // Prepare and execute the SQL query to create a new ride
-$stmt = $conn->prepare("INSERT INTO rides (driver_id, pickup_location, pickup_latitude, pickup_longitude, dropoff_location, dropoff_latitude, dropoff_longitude, available_seats, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'upcoming')");
-$stmt->bind_param("issssssi", $driverId, $pickupLocation, $pickupCoordinates['latitude'], $pickupCoordinates['longitude'], $dropoffLocation, $dropoffCoordinates['latitude'], $dropoffCoordinates['longitude'], $seats);
+$stmt = $conn->prepare("INSERT INTO rides (driver_id, pickup_location, pickup_latitude, pickup_longitude, dropoff_location, dropoff_latitude, dropoff_longitude, available_seats, ride_start_date, ride_start_time, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'upcoming')");
+$stmt->bind_param("isssssssss", $driverId, $pickupLocation, $pickupCoordinates['latitude'], $pickupCoordinates['longitude'], $dropoffLocation, $dropoffCoordinates['latitude'], $dropoffCoordinates['longitude'], $seats, $rideStartDate, $rideStartTime);
 
 if ($stmt->execute()) {
   // Get the newly created ride's ID
@@ -63,19 +81,21 @@ if ($stmt->execute()) {
   // Return the ride details as JSON response
   $response = array(
     'rideId' => $rideId,
-    'driverName' => 'Nadia',
-    // Replace with the actual driver's name user.id
     'pickup' => $pickupLocation,
     'pickupLatitude' => $pickupCoordinates['latitude'],
     'pickupLongitude' => $pickupCoordinates['longitude'],
     'dropoff' => $dropoffLocation,
     'dropoffLatitude' => $dropoffCoordinates['latitude'],
     'dropoffLongitude' => $dropoffCoordinates['longitude'],
-    'seats' => $seats
+    'seats' => $seats,
+    'rideStartDate' => $rideStartDate,
+    'rideStartTime' => $rideStartTime,
   );
 
+  // Output the JSON response
   echo json_encode($response);
 } else {
-  echo "Error: " . $stmt->error;
+  // Output an error response as JSON
+  echo json_encode(array('error' => 'Error creating ride'));
 }
 ?>

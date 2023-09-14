@@ -129,9 +129,104 @@ include_once "php/config.php"; // Include other necessary files
         }
     }
 
-    #driver_page{
+    #driver_page {
         background-color: darkcyan;
         color: white;
+    }
+
+    /* CSS for small form inputs */
+    .form_small_inputs {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+
+    .form-group {
+        flex: 1;
+        max-width: calc(33.33% - 20px);
+        /* Adjust the width as needed */
+    }
+
+    .form-group label {
+        font-family: 'Arial', sans-serif;
+        font-size: 20px;
+    }
+
+    .form-group input {
+        width: 100%;
+        padding: 8px;
+        font-size: 14px;
+        margin-bottom: 10px;
+    }
+
+    .ride-box-container {
+        width: 90%;
+    }
+
+    /* Update the ride-box-container class */
+    .ride-box-container {
+        /* TODO: */
+        width: 100%;
+        /* width: calc(50% - 5px); */
+        height: 160px;
+        /* Adjust the height to 160px */
+        background: linear-gradient(135deg, rgba(26, 26, 29, 0.8), rgba(51, 52, 56, 0.8));
+        box-shadow: 0 0 10px rgba(16, 218, 212, 0.4);
+        /* Adjust the box-shadow */
+        transition: max-width 0.4s;
+        overflow-y: auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        float: right;
+        margin-bottom: 10px;
+        border-radius: 10px;
+        /* Add border-radius */
+        padding: 10px;
+        /* Add padding for inner elements */
+    }
+
+    /* Style the elements inside the ride-box-container */
+    .ride-box-container .driver {
+        font-weight: bold;
+        font-size: 18px;
+        margin-bottom: 5px;
+        color: #fff;
+        /* Text color */
+    }
+
+    .ride-box-container .seats {
+        font-size: 16px;
+        color: #fff;
+        /* Text color */
+    }
+
+    .ride-box-container .pickup-location,
+    .ride-box-container .dropoff-location {
+        font-size: 16px;
+        color: #fff;
+        /* Text color */
+    }
+
+    /* Add styling for the join button */
+    .ride-box-container .btn {
+        background-color: #1f4e5a;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        padding: 5px 10px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    .ride-box-container .btn:hover {
+        background-color: #16748f;
+    }
+    .ride-box-container:hover {
+        background-color: lightgray;
+        cursor: pointer;
     }
 </style>
 
@@ -191,12 +286,27 @@ include_once "php/config.php"; // Include other necessary files
                     Location</label>
                 <input type="text" id="dropoffLocation" name="dropoffLocation" placeholder="Drop-off location">
 
+                <div class="form_small_inputs">
+                    <div class="form-group">
+                        <label for="seats" style="font-family: 'Arial', sans-serif; font-size: 20px;">Seats</label>
+                        <input type="number" id="seats" name="seats" placeholder="Available Seats" min="1">
+                    </div>
 
-                <label for="seats" style="font-family: 'Arial', sans-serif; font-size: 20px;">Seats</label>
-                <input type="number" id="seats" name="seats" placeholder="Available Seats" min="1">
+                    <div class="form-group">
+                        <label for="rideStartDate" style="font-family: 'Arial', sans-serif; font-size: 20px;">Start
+                            Date</label>
+                        <input type="date" id="rideStartDate" name="rideStartDate" value="<?php echo date('Y-m-d'); ?>"
+                            required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="rideStartTime" style="font-family: 'Arial', sans-serif; font-size: 20px;">Start
+                            Time</label>
+                        <input type="time" id="rideStartTime" name="rideStartTime" required>
+                    </div>
+                </div>
 
                 <button type="submit" class="btn">Create Ride</button>
-
 
                 <div class="rides-container">
                     <div class="ride-details" id="ride-details"></div>
@@ -214,6 +324,7 @@ include_once "php/config.php"; // Include other necessary files
 <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
 <script>
     // ***************************** Navbar ***************************** //
+
     let menu = document.querySelector('#menu-icon');
     let navList = document.querySelector('.nav_items');
 
@@ -235,11 +346,13 @@ include_once "php/config.php"; // Include other necessary files
         const pickupLocation = document.getElementById('pickupLocation').value;
         const dropoffLocation = document.getElementById('dropoffLocation').value;
         const seats = document.getElementById('seats').value;
+        const rideStartDate = document.getElementById('rideStartDate').value;
+        const rideStartTime = document.getElementById('rideStartTime').value;
 
         // Send a request to the server to create a new ride
         fetch('php/create_ride.php', {
             method: 'POST',
-            body: JSON.stringify({ pickupLocation, dropoffLocation, seats }), // Updated object keys
+            body: JSON.stringify({ pickupLocation, dropoffLocation, seats, rideStartDate, rideStartTime }),
         })
             .then(response => response.json())
             .then(data => {
@@ -250,10 +363,14 @@ include_once "php/config.php"; // Include other necessary files
                 if (data && data.rideId) {
                     const rideDiv = document.createElement('div');
                     rideDiv.classList.add('ride-box-container');
+                    rideDiv.addEventListener('click', () => {
+                        window.location.href = 'users.php';
+                    });
 
                     const driverInfo = document.createElement('p');
                     driverInfo.classList.add('driver');
                     // driverInfo.textContent = `Driver: ${data.driverName}`;
+                    driverInfo.textContent = `Waiting for passengers`;
                     rideDiv.appendChild(driverInfo);
 
                     const seatsInfo = document.createElement('p');
@@ -325,6 +442,22 @@ include_once "php/config.php"; // Include other necessary files
         })
         .addTo(map);
 
+    // ***************************** Time Formating ***************************** //
+    function formatTwoDigits(num) {
+        return num < 10 ? '0' + num : num;
+    }
+
+    // Get the current date and time
+    const now = new Date();
+
+    // Add 10 minutes to the current time
+    now.setMinutes(now.getMinutes() + 10);
+
+    // Extract the updated time (hours and minutes) as a string in "HH:MM" format
+    const updatedTime = `${formatTwoDigits(now.getHours())}:${formatTwoDigits(now.getMinutes())}`;
+
+    // Set the value of the "Ride Start Time" input field to the updated time
+    document.getElementById('rideStartTime').value = updatedTime;
 </script>
 
 

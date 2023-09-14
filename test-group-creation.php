@@ -7,8 +7,13 @@ if (!isset($_SESSION['unique_id'])) {
 }
 ?>
 <?php include_once "header.php"; ?>
-
-<!-- Add your testing content here -->
+<!-- 
+  CREATE TABLE `groups` (
+  `group_id` INT PRIMARY KEY AUTO_INCREMENT,
+  `group_name` VARCHAR(255) NOT NULL,
+  `members` VARCHAR(1000) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+ -->
 <div class="group-creation-form">
   <h2>Create a New Group</h2>
   <form action="php/create-group.php" method="POST">

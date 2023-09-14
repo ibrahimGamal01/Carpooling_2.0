@@ -2,7 +2,7 @@
 include_once "auth_check.php";
 include_once "php/config.php";
 ?>
-
+<!-- passenger.php -->
 <?php include_once "header.php"; ?>
 
 <style>
@@ -125,10 +125,6 @@ include_once "php/config.php";
         color: black;
     }
 
-    .ride-box-container:hover {
-        background-color: lightgray;
-        cursor: pointer;
-    }
 
     .Check_all_btn {
         background-color: #4CAF50;
@@ -153,10 +149,80 @@ include_once "php/config.php";
         width: 100%;
         height: 100%;
     }
-    #passenger_page{
+
+    #passenger_page {
         background-color: darkcyan;
         color: white;
     }
+
+    :root {
+    --box-width: 100%;
+    --box-background: linear-gradient(135deg, rgba(26, 26, 29, 0.8), rgba(51, 52, 56, 0.8));
+    --box-shadow: 0 0 10px rgba(16, 218, 212, 0.4);
+    --button-bg: #16748f;
+    --button-hover-bg: #105d7b;
+    --font-size-lg: 18px;
+    --font-size-sm: 14px;
+    --margin-top-lg: 10px;
+    --margin-top-sm: 5px;
+    --padding: 10px;
+    --border-radius: 10px;
+}
+
+.ride-box-container {
+    width: var(--box-width);
+    height: 160px;
+    background: var(--box-background);
+    box-shadow: var(--box-shadow);
+    transition: max-width 0.4s;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    float: right;
+    margin-bottom: 10px;
+    border-radius: var(--border-radius);
+    padding: var(--padding);
+}
+
+.ride-box-container .seats {
+    font-size: var(--font-size-lg);
+}
+
+/* Style pickup and dropoff locations */
+.ride-box-container .pickup-location,
+.ride-box-container .dropoff-location {
+    font-size: var(--font-size-lg);
+    margin-top: var(--margin-top-lg);
+}
+
+/* Style the button */
+.ride-box-container .btn {
+    background-color: var(--button-bg);
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: var(--padding);
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: var(--margin-top-lg);
+}
+
+/* Button hover effect */
+.ride-box-container .btn:hover {
+    background-color: var(--button-hover-bg);
+}
+.ride-box-container:hover {
+  background-color: lightgray;
+  cursor: pointer;
+}
+
+/* Style the ride start time and date */
+.ride-box-container .ride_start_time,
+.ride-box-container .ride_start_date {
+    font-size: var(--font-size-sm);
+    margin-top: var(--margin-top-sm);
+}
 </style>
 
 <body>
@@ -252,7 +318,7 @@ include_once "php/config.php";
 
     function joinRide(rideId) {
         const formData = new FormData();
-        formData.append('ride_id', rideId);
+        formData.append('rideId', rideId); // Change to 'rideId' instead of 'ride_id'
 
         fetch('php/join_ride.php', {
             method: 'POST',
@@ -272,6 +338,10 @@ include_once "php/config.php";
 
                     // Update map coordinates
                     updateMapCoordinates(rideId);
+                } else {
+                    const errorMessage = document.querySelector('.error-message');
+                    errorMessage.textContent = data.error;
+                    errorMessage.style.display = 'block';
                 }
             })
             .catch(error => {
@@ -316,8 +386,8 @@ include_once "php/config.php";
 
                         const driverInfo = document.createElement('p');
                         driverInfo.classList.add('driver');
+                        driverInfo.textContent = `Ride: ${ride.ride_id}`;
                         // driverInfo.textContent = `Driver: ${ride.driver_id}`;
-                        driverInfo.textContent = `Driver: ${"Anton"}`;
                         rideDiv.appendChild(driverInfo);
 
                         const seatsInfo = document.createElement('p');
@@ -326,12 +396,24 @@ include_once "php/config.php";
                         rideDiv.appendChild(seatsInfo);
 
                         const pickupInfo = document.createElement('p');
+                        pickupInfo.classList.add('pickupInfo');
                         pickupInfo.textContent = `Pickup: ${ride.pickup_location}`;
                         rideDiv.appendChild(pickupInfo);
 
                         const dropoffInfo = document.createElement('p');
+                        dropoffInfo.classList.add('dropoffInfo');
                         dropoffInfo.textContent = `Dropoff: ${ride.dropoff_location}`;
                         rideDiv.appendChild(dropoffInfo);
+
+                        const ride_start_time = document.createElement('p');
+                        ride_start_time.classList.add('ride_start_time');
+                        ride_start_time.textContent = `Time: ${ride.ride_start_time}`;
+                        rideDiv.appendChild(ride_start_time);
+
+                        const ride_start_date = document.createElement('p');
+                        ride_start_date.classList.add('ride_start_date');
+                        ride_start_date.textContent = `Date: ${ride.ride_start_date}`;
+                        rideDiv.appendChild(ride_start_date);
 
                         const joinButton = document.createElement('button');
                         joinButton.classList.add('btn');
@@ -340,9 +422,7 @@ include_once "php/config.php";
 
                         joinButton.addEventListener('click', () => {
                             // const passengerName = prompt('Please enter your name:');
-                            if (passengerName) {
-                                joinRide(ride.ride_id, passengerName);
-                            }
+                            window.location.href = `chat.php?user_id=${ride.driver_id}`;
                         });
 
                         const rideCoordinatesObj = {
@@ -403,8 +483,8 @@ include_once "php/config.php";
 
                         const driverInfo = document.createElement('p');
                         driverInfo.classList.add('driver');
-                        // driverInfo.textContent = `Driver: ${ride.driver_id}`;
-                        driverInfo.textContent = `Driver: ${"Anton"}`;
+                        driverInfo.textContent = `Ride: ${ride.ride_id}`;
+                        // driverInfo.textContent = `Driver: ${"Ibrahim"}`;
                         rideDiv.appendChild(driverInfo);
 
                         const seatsInfo = document.createElement('p');
@@ -413,12 +493,24 @@ include_once "php/config.php";
                         rideDiv.appendChild(seatsInfo);
 
                         const pickupInfo = document.createElement('p');
+                        pickupInfo.classList.add('pickupInfo');
                         pickupInfo.textContent = `Pickup: ${ride.pickup_location}`;
                         rideDiv.appendChild(pickupInfo);
 
                         const dropoffInfo = document.createElement('p');
+                        dropoffInfo.classList.add('dropoffInfo');
                         dropoffInfo.textContent = `Dropoff: ${ride.dropoff_location}`;
                         rideDiv.appendChild(dropoffInfo);
+
+                        const ride_start_time = document.createElement('p');
+                        ride_start_time.classList.add('ride_start_time');
+                        ride_start_time.textContent = `Time: ${ride.ride_start_time}`;
+                        rideDiv.appendChild(ride_start_time);
+
+                        const ride_start_date = document.createElement('p');
+                        ride_start_date.classList.add('ride_start_date');
+                        ride_start_date.textContent = `Date: ${ride.ride_start_date}`;
+                        rideDiv.appendChild(ride_start_date);
 
                         const joinButton = document.createElement('button');
                         joinButton.classList.add('btn');
@@ -427,9 +519,7 @@ include_once "php/config.php";
 
                         joinButton.addEventListener('click', () => {
                             // const passengerName = prompt('Please enter your name:');
-                            if (passengerName) {
-                                joinRide(ride.ride_id, passengerName);
-                            }
+                            window.location.href = `chat.php?user_id=${ride.driver_id}`;
                         });
 
                         const rideCoordinatesObj = {
@@ -574,3 +664,37 @@ include_once "php/config.php";
 </body>
 
 </html>
+
+<!-- 
+Update the ride-box-container class
+    .ride-box-container {
+        /* width: calc(50% - 5px); */
+        width: 90%;
+        height: 180px;
+        /* margin-right: 10px; */
+        /* border-radius: 5px; */
+        background: linear-gradient(135deg, rgba(26, 26, 29, 0.8), rgba(51, 52, 56, 0.8));
+        box-shadow: 0 0 10px rgb(16 218 212 / 40%);
+        transition: max-width 0.4s;
+        overflow-y: auto;
+        /* margin-bottom: 10px; */
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        float: right;
+    }
+
+    /* Clear floats after every two rides to start a new row */
+    .ride-box-container:nth-child(even) {
+        margin-right: 0;
+        clear: both;
+    }
+
+    /* Make ride boxes 100% width when not large enough (for responsive design) */
+    @media (max-width: 600px) {
+        .ride-box-container {
+            width: 100%;
+            margin-right: 0;
+            /* Remove spacing between rides */
+        }
+    } -->

@@ -29,6 +29,11 @@ CREATE TABLE `messages` (
   `msg` VARCHAR(1000) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4; -->
 
+<style>
+  *{
+    color: black;
+  }
+</style>
 <body>
   <div class="wrapper">
     <section class="chat-area">

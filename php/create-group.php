@@ -1,36 +1,10 @@
 <?php
 // Path: php/create-group.php
-
-//     header("location: login.php");
-//   }
-// CREATE TABLE `messages` (
-//     `msg_id` INT PRIMARY KEY AUTO_INCREMENT,
-//     `incoming_msg_id` INT NOT NULL,
-//     `outgoing_msg_id` INT NOT NULL,
-//     `msg` VARCHAR(1000) NOT NULL
-//   ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
-
-//   -- Create a new table for groups
-//   CREATE TABLE `groups` (
-//     `group_id` INT PRIMARY KEY AUTO_INCREMENT,
-//     `group_name` VARCHAR(255) NOT NULL,
-//     `members` VARCHAR(1000) NOT NULL
-//   ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
-//   -- Modify the `messages` table to include `group_id`
-//   ALTER TABLE `messages` ADD `group_id` INT NOT NULL;
-
 session_start();
 include_once "config.php";
 
-$group_name = mysqli_real_escape_string($conn, $_POST['group_name']); // Assuming you're sending the group name from the frontend
-$creator_id = $_SESSION['unique_id']; 
-// $creator_id = mysqli_real_escape_string($conn, $_POST['creator_id']); // Assuming you're sending the creator id from the frontend
-// $members = mysqli_real_escape_string($conn, $_POST['members']); // Assuming you're sending the members from the frontend
-// $members = $creator_id; // Assuming you're sending the members from the frontend
-
-// $creator_id = 1;
+$group_name = mysqli_real_escape_string($conn, $_POST['group_name']);
+$creator_id = $_SESSION['unique_id'];
 
 $response = array();
 
@@ -45,12 +19,20 @@ if (empty($group_name)) {
         $response['error'] = "Group with this name already exists!";
     } else {
         // Create the new group
-        $insert_sql = "INSERT INTO groups (group_name, creator_id, members) 
-                       VALUES ('{$group_name}', {$creator_id}, '{$creator_id}')";
+        $insert_sql = "INSERT INTO groups (group_name, creator_id) VALUES ('{$group_name}', {$creator_id})";
         $insert_result = mysqli_query($conn, $insert_sql);
 
         if ($insert_result) {
-            $response['success'] = "Group created successfully";
+            $group_id = mysqli_insert_id($conn); // Get the ID of the newly created group
+            // Add the creator as a participant in the group
+            $add_creator_sql = "INSERT INTO group_chat_participants (group_id, user_id) VALUES ({$group_id}, {$creator_id})";
+            $add_creator_result = mysqli_query($conn, $add_creator_sql);
+
+            if ($add_creator_result) {
+                $response['success'] = "Group created successfully";
+            } else {
+                $response['error'] = "Error adding creator to the group";
+            }
         } else {
             $response['error'] = "Error creating group";
         }

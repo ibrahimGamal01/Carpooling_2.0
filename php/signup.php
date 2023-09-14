@@ -1,4 +1,5 @@
 <?php
+// Path: php/signup
     session_start();
     include_once "config.php";
     $fname = mysqli_real_escape_string($conn, $_POST['fname']);
@@ -36,6 +37,7 @@
                                     if(mysqli_num_rows($select_sql2) > 0){
                                         $result = mysqli_fetch_assoc($select_sql2);
                                         $_SESSION['unique_id'] = $result['unique_id'];
+                                        $_SESSION['fname'] = $row['fname'];
                                         echo "success";
                                     }else{
                                         echo "This email address not Exist!";
@@ -59,3 +61,4 @@
         echo "All input fields are required!";
     }
 ?>
+

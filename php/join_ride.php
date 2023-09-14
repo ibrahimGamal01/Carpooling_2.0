@@ -1,79 +1,59 @@
 <?php
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "carpooling";
+// Path: php/join_ride.php
+session_start();
+include_once "config.php"; // Include your database connection file
 
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+// Check if the user is logged in
+if (!isset($_SESSION['unique_id'])) {
+  die("Error: User not logged in.");
 }
 
-// Retrieve the ride ID from the request
-$rideId = isset($_POST['ride_id']) ? $_POST['ride_id'] : '';
+// CREATE TABLE `ride_passengers` (
+//     `passenger_id` INT PRIMARY KEY AUTO_INCREMENT,
+//     `ride_id` INT NOT NULL,
+//     `passenger_name` VARCHAR(255) NOT NULL,
+//     FOREIGN KEY (`ride_id`) REFERENCES `rides`(`ride_id`)
+//   ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-// Validate the required ride ID
+// Retrieve the ride ID and user ID from the request
+$requestData = json_decode(file_get_contents('php://input'), true);
+$rideId = isset($requestData['rideId']) ? $requestData['rideId'] : '';
+$userId = $_SESSION['unique_id'];
+
+// Validate the required fields
 if (empty($rideId)) {
-    die("Error: Ride ID is missing.");
+  die("Error: Required fields are missing.");
 }
 
-// Retrieve the passenger name from the request
-$passengerName = isset($_POST['passenger_name']) ? $_POST['passenger_name'] : '';
+// Check if the user is already a passenger in this ride
+$checkPassengerQuery = "SELECT * FROM ride_passengers WHERE ride_id = ? AND passenger_id = ?";
+$checkPassengerStmt = $conn->prepare($checkPassengerQuery);
+$checkPassengerStmt->bind_param("ii", $rideId, $userId);
+$checkPassengerStmt->execute();
+$existingPassenger = $checkPassengerStmt->fetch();
+$checkPassengerStmt->close();
 
-// Validate the required passenger name
-if (empty($passengerName)) {
-    die("Error: Passenger name is missing.");
-}
-
-// Check if the ride exists
-$rideCheckStmt = $conn->prepare("SELECT * FROM rides WHERE ride_id = ?");
-$rideCheckStmt->bind_param("i", $rideId);
-$rideCheckStmt->execute();
-$rideCheckResult = $rideCheckStmt->get_result();
-
-if ($rideCheckResult->num_rows > 0) {
-    $ride = $rideCheckResult->fetch_assoc();
-
-    // Check if there are available seats in the ride
-    if ($ride['available_seats'] > 0) {
-        // Prepare and execute the SQL query to insert the passenger into the ride
-        $insertStmt = $conn->prepare("INSERT INTO passengers (ride_id, name) VALUES (?, ?)");
-        $insertStmt->bind_param("is", $rideId, $passengerName);
-
-        if ($insertStmt->execute()) {
-            // Update the available seats count
-            $updatedSeats = $ride['available_seats'] - 1;
-
-            // Prepare and execute the SQL query to update the available seats count
-            $updateSeatsStmt = $conn->prepare("UPDATE rides SET available_seats = ? WHERE ride_id = ?");
-            $updateSeatsStmt->bind_param("ii", $updatedSeats, $rideId);
-            $updateSeatsStmt->execute();
-
-            // Close the database connection
-            $updateSeatsStmt->close();
-            $insertStmt->close();
-            $conn->close();
-
-            // Return success response
-            $response = array(
-                'rideId' => $rideId,
-                'passenger' => $passengerName,
-                'seats' => $updatedSeats
-            );
-
-            header('Content-Type: application/json');
-            echo json_encode($response);
-        } else {
-            echo "Error: Failed to join the ride.";
-        }
-    } else {
-        echo "Error: No available seats in the ride.";
-    }
+if ($existingPassenger) {
+  // User is already a passenger in this ride
+  echo json_encode(array('error' => 'You are already a passenger in this ride.'));
 } else {
-    echo "Error: Ride not found.";
+  // Add the user as a passenger to the ride
+  $addPassengerQuery = "INSERT INTO ride_passengers (ride_id, passenger_id, passenger_name) VALUES (?, ?, ?)";
+  $addPassengerStmt = $conn->prepare($addPassengerQuery);
+  $passengerName = $_SESSION['fname'] . " " . $_SESSION['lname']; // Change to the actual name
+  $addPassengerStmt->bind_param("iss", $rideId, $userId, $passengerName);
+
+  if ($addPassengerStmt->execute()) {
+    // Passenger added successfully
+    echo json_encode(array('success' => true, 'message' => 'You have successfully joined the ride.'));
+  } else {
+    // Error adding passenger
+    echo json_encode(array('error' => 'Error joining the ride.'));
+  }
+
+  $addPassengerStmt->close();
 }
 
-$rideCheckStmt->close();
+// Close the database connection
+$conn->close();
 ?>

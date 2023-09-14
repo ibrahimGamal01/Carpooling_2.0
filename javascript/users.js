@@ -2,9 +2,8 @@
 // Handle search bar
 const searchBar = document.querySelector(".search input"),
   searchIcon = document.querySelector(".search button"),
-  usersList = document.querySelector(".users-list"),
-  createGroupButton = document.getElementById('create-group');
-
+  usersList = document.querySelector(".users-list");
+  
 searchIcon.onclick = () => {
   searchBar.classList.toggle("show");
   searchIcon.classList.toggle("active");
@@ -52,50 +51,9 @@ setInterval(() => {
   xhr.send();
 }, 500);
 
-// Handle group creation
-createGroupButton.addEventListener('click', () => {
-  const groupName = prompt('Enter the group name:');
-  if (groupName) {
-    fetch('php/create-group.php', {
-      method: 'POST',
-      body: JSON.stringify({ group_name: groupName }),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-      .then(response => response.text())
-      .then(data => {
-        alert(data);
-        // Refresh the user list or take other actions as needed
-        refreshUserList();
-      })
-      .catch(error => {
-        console.error('Error creating group:', error);
-      });
-  }
-});
 
-// Handle group joining (You can add this part as needed)
-// Create a function to join a group and call it when necessary
-function joinGroup(groupId) {
-  // Send an AJAX request to php/join-group.php with the groupId
-  fetch('php/join-group.php', {
-    method: 'POST',
-    body: JSON.stringify({ group_id: groupId }),
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  })
-    .then(response => response.text())
-    .then(data => {
-      alert(data);
-      // Refresh the user list or take other actions as needed
-      refreshUserList();
-    })
-    .catch(error => {
-      console.error('Error joining group:', error);
-    });
-}
+
+
 
 // Helper function to refresh the user list
 function refreshUserList() {
