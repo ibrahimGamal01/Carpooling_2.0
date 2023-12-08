@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+  <!-- Path: header.php -->
 
 <head>
   <meta charset="UTF-8">
