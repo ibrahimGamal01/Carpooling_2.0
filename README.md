@@ -4,11 +4,10 @@
 
 ![ERD](Documentation/ER_Diagram.png)
 
-## Activity Diagram
 
-![Activity Diagram](Documentation/Activity_Diagram.svg)
+<!-- ![Activity Diagram](Documentation/Activity_Diagram.svg) -->
 
-link: [Activity Diagram Lucidchart](https://lucid.app/documents/embedded/612ab06c-b2ce-42f6-a908-c0d885258926#)
+<!-- link: [Activity Diagram Lucidchart](https://lucid.app/documents/embedded/612ab06c-b2ce-42f6-a908-c0d885258926#) -->
 
 <!-- link: [Class Diagram Lucidchart](https://lucid.app/documents/embedded/685b0fd3-012c-4ea6-9e92-f7fae120cae1) -->
 
@@ -40,6 +39,36 @@ The file structure of this project is organized as follows:
         - `favicon.ico`: Icon file for web browsers.
         - `favicon-16x16.png`: Icon file for web browsers.
         - `favicon-32x32.png`: Icon file for web browsers.
+
+## Design
+
+### Desktop Design
+
+Here are the design mockups for the Desktop version of the application:
+
+- **Login Page**
+    
+    ![Login](Documentation/login.png)
+
+- **Home Page**
+    
+    ![Home](Documentation/Desktop_Home.png)
+
+- **Carpooling Main Page**
+    
+    ![Carpooling Main](Documentation/Carpooling_Main.png)
+
+### Phone Design
+
+Here are the design mockups for the Phone version of the application:
+
+- **Home Page**
+    
+    ![Phone Home](Documentation/Phone_Home.png)
+
+- **Carpooling Main Page**
+    
+    ![Phone Carpooling Main](Documentation/Phone_Carpooling_Main.png)
 
 ## Setting Up the Website
 
